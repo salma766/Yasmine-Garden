@@ -1,7 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { prisma } from "./db";
-import { getSession } from "./auth";
+import { currentUser } from "./auth";
 import { href, locales, type Alternates, type Locale, type RouteName } from "./i18n";
 
 type Tr = { locale: string; status: string; [k: string]: unknown };
@@ -11,7 +11,7 @@ type WithTr<T> = T & { translations: Tr[] };
 export async function isPreview(searchParams?: Promise<Record<string, string | string[] | undefined>>) {
   const sp = searchParams ? await searchParams : {};
   if (sp.preview !== "1") return false;
-  return !!(await getSession());
+  return !!(await currentUser());
 }
 
 function visible(tr: Tr | undefined, preview: boolean) {

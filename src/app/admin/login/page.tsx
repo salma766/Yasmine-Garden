@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
-import { getSession } from "@/lib/auth";
+import { currentUser } from "@/lib/auth";
 import { getAdminT } from "@/lib/admin";
 import { LoginForm } from "./LoginForm";
 import { AdminLanguagePicker } from "@/components/admin/AdminLanguagePicker";
 
 export default async function LoginPage() {
-  if (await getSession()) redirect("/admin");
+  if (await currentUser()) redirect("/admin");
   const { locale, t } = await getAdminT();
   return (
     <div className="flex min-h-screen items-center justify-center p-4">

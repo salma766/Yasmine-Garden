@@ -38,6 +38,8 @@ export default async function PanelLayout({ children }: { children: ReactNode })
             {a.messages}
             {unread > 0 && <span className="ms-2 rounded-full bg-terracotta-500 px-2 py-0.5 text-[11px] font-bold">{unread}</span>}
           </AdminNavLink>
+          {session.role === "ADMIN" && <AdminNavLink href="/admin/users">{a.usersNav}</AdminNavLink>}
+          <AdminNavLink href="/admin/account">{a.accountNav}</AdminNavLink>
         </nav>
         <div className="space-y-3 border-t border-white/10 p-5 text-sm">
           <AdminLanguagePicker current={locale} dark />

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { getSession } from "@/lib/auth";
+import { currentUser } from "@/lib/auth";
 import { isLocale, localeInfo } from "@/lib/i18n";
 
 // Fields that must never be sent for translation (URLs, images).
@@ -12,7 +12,7 @@ const SKIP = new Set(["image", "logo", "slug"]);
  * before it can be published.
  */
 export async function POST(req: Request) {
-  if (!(await getSession())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  if (!(await currentUser())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   if (!process.env.ANTHROPIC_API_KEY) return NextResponse.json({ error: "not-configured" }, { status: 501 });
 
   const body = (await req.json()) as { from?: string; to?: string; fields?: Record<string, string> };

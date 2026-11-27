@@ -33,6 +33,8 @@ Site multilingue (français, anglais, italien, arabe avec mise en page RTL compl
 - **Textes de l'interface** : modification des libellés (menus, boutons, formulaires, messages) dans chaque langue.
 - **Paramètres du site** : logo (un emplacement provisoire s'affiche tant qu'aucun logo n'est envoyé), favicon, téléphones, e-mail, réseaux sociaux, adresse et horaires traduits.
 - Messages reçus via le formulaire de contact.
+- **Utilisateurs** : nombre illimité de comptes, avec deux rôles. **Éditeur** : tout le contenu, les traductions, les paramètres et les messages. **Administrateur** : tout cela, plus la gestion des utilisateurs. Il reste toujours au moins un administrateur.
+- **Mon compte** : chacun peut changer son nom et son mot de passe.
 
 ## Mise en ligne sur Vercel
 

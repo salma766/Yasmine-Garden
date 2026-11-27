@@ -1,7 +1,10 @@
 import "server-only";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 import { SignJWT, jwtVerify } from "jose";
+import type { AdminRole } from "@prisma/client";
+import { prisma } from "./db";
 
 export const SESSION_COOKIE = "yg_admin";
 const MAX_AGE = 60 * 60 * 12; // 12 hours
@@ -45,8 +48,30 @@ export async function getSession(): Promise<Session | null> {
   }
 }
 
-export async function requireAdmin(): Promise<Session> {
+export type CurrentUser = Session & { role: AdminRole };
+
+/**
+ * The signed-in user, read from the database on every request so that a
+ * role change or a deleted account takes effect immediately.
+ */
+export const currentUser = cache(async (): Promise<CurrentUser | null> => {
   const s = await getSession();
-  if (!s) redirect("/admin/login");
-  return s;
+  if (!s) return null;
+  const user = await prisma.adminUser.findUnique({ where: { id: s.sub }, select: { id: true, email: true, name: true, role: true } });
+  if (!user) return null;
+  return { sub: user.id, email: user.email, name: user.name, role: user.role };
+});
+
+/** Any signed-in user (administrator or editor). */
+export async function requireAdmin(): Promise<CurrentUser> {
+  const u = await currentUser();
+  if (!u) redirect("/admin/login");
+  return u;
+}
+
+/** Administrators only (user management). */
+export async function requireAdministrator(): Promise<CurrentUser> {
+  const u = await requireAdmin();
+  if (u.role !== "ADMIN") redirect("/admin");
+  return u;
 }

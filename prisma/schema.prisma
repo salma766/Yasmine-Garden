@@ -38,11 +38,18 @@ enum Placement {
 }
 
 model AdminUser {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String    @id @default(cuid())
+  email        String    @unique
   name         String?
   passwordHash String
-  createdAt    DateTime @default(now())
+  role         AdminRole @default(ADMIN)
+  createdAt    DateTime  @default(now())
+}
+
+/// ADMIN: everything, including managing users. EDITOR: all content, translations, settings and messages.
+enum AdminRole {
+  ADMIN
+  EDITOR
 }
 
 // ---------- Site settings (singleton, id = 1) ----------

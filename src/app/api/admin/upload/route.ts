@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { getSession } from "@/lib/auth";
+import { currentUser } from "@/lib/auth";
 
 const ALLOWED = ["image/png", "image/jpeg", "image/webp", "image/svg+xml", "image/gif", "image/x-icon", "image/vnd.microsoft.icon"];
 const MAX = 8 * 1024 * 1024;
@@ -11,7 +11,7 @@ const MAX = 8 * 1024 * 1024;
  * set (production); otherwise stores files in public/uploads (local dev).
  */
 export async function POST(req: Request) {
-  if (!(await getSession())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  if (!(await currentUser())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   const form = await req.formData();
   const file = form.get("file");
   if (!(file instanceof File)) return NextResponse.json({ error: "no file" }, { status: 400 });
