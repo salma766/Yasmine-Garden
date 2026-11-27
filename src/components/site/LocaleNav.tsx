@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { createPortal } from "react-dom";
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { anySegment, locales, localeInfo, LOCALE_COOKIE, segments, type Alternates, type Locale } from "@/lib/i18n";
 import { ChevronDown, CloseIcon, GlobeIcon, MenuIcon, PhoneIcon } from "@/components/Icons";
@@ -186,8 +187,9 @@ export function MobileNav({
       >
         <MenuIcon width={24} height={24} />
       </button>
-      {open && (
-        <div className="fixed inset-0 z-50">
+      {/* Rendered in <body>: the header's backdrop blur would otherwise trap the fixed drawer inside the header. */}
+      {open && createPortal(
+        <div className="fixed inset-0 z-50 xl:hidden">
           <div className="absolute inset-0 bg-forest-950/40" onClick={() => setOpen(false)} />
           <div className="absolute inset-y-0 end-0 flex w-80 max-w-[85vw] flex-col bg-cream-50 p-6 shadow-2xl">
             <div className="mb-6 flex justify-end">
@@ -197,7 +199,7 @@ export function MobileNav({
             </div>
             <nav className="flex flex-col gap-1" aria-label={openLabel}>
               {items.map((it) => (
-                <Link key={it.href} href={it.href} className="rounded-xl px-4 py-3 text-lg font-medium text-ink-900 hover:bg-leaf-100">
+                <Link key={it.href} href={it.href} onClick={() => setOpen(false)} className="rounded-xl px-4 py-3 text-lg font-medium text-ink-900 hover:bg-leaf-100">
                   {it.label}
                 </Link>
               ))}
@@ -209,12 +211,13 @@ export function MobileNav({
                   <span dir="ltr">{phone}</span>
                 </a>
               )}
-              <Link href={quote.href} className="btn btn-accent">
+              <Link href={quote.href} onClick={() => setOpen(false)} className="btn btn-accent">
                 {quote.label}
               </Link>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </div>
   );
