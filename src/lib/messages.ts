@@ -4,7 +4,8 @@ import fr, { type Messages } from "@/messages/fr";
 import en from "@/messages/en";
 import it from "@/messages/it";
 import ar from "@/messages/ar";
-import type { Locale } from "./i18n";
+import { notFound } from "next/navigation";
+import { isLocale, type Locale } from "./i18n";
 import { prisma } from "./db";
 
 export const dictionaries: Record<Locale, Messages> = { fr, en, it, ar };
@@ -38,6 +39,8 @@ function setPath(obj: Record<string, unknown>, path: string, value: string) {
  * overrides an administrator saved in "Interface texts" applied on top.
  */
 export const getMessages = cache(async (locale: Locale): Promise<Messages> => {
+  // Requests like /apple-touch-icon.png reach [locale] with a non-locale value.
+  if (!isLocale(locale)) notFound();
   const base = structuredClone(dictionaries[locale]);
   try {
     const overrides = await prisma.uiTranslation.findMany({ where: { locale } });
