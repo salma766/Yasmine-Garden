@@ -48,7 +48,8 @@ export async function buildMetadata(opts: {
     },
     twitter: { card: image ? "summary_large_image" : "summary", title, description },
     robots: opts.noindex ? { index: false, follow: false } : undefined,
-    verification: process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : undefined,
+    // Google Search Console ownership tag (public value). Can be overridden with GOOGLE_SITE_VERIFICATION.
+    verification: { google: process.env.GOOGLE_SITE_VERIFICATION || "N1ID25OGzb13rLVrun3IpKjEYQl4KGSF3GAEt_0ziM8" },
     icons: settings.base?.faviconUrl ? { icon: settings.base.faviconUrl } : undefined,
   };
 }
