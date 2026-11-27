@@ -1,0 +1,362 @@
+// Multilingual content architecture.
+// Every content entity has one base row (language-independent data: images,
+// ordering, technical values) and one translation row per language
+// (fr, en, it, ar) linked by `entityId`. Images are shared across languages
+// unless a translation sets its own `image` override.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+enum TranslationStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum LightLevel {
+  FULL_SUN
+  PARTIAL_SHADE
+  SHADE
+}
+
+enum WateringLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum Placement {
+  INDOOR
+  OUTDOOR
+  BOTH
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+// ---------- Site settings (singleton, id = 1) ----------
+model SiteSettings {
+  id           Int                       @id @default(1)
+  logoUrl      String?
+  faviconUrl   String?
+  phones       String[]
+  email        String?
+  mapEmbedUrl  String?
+  mapLink      String?
+  facebookUrl  String?
+  instagramUrl String?
+  whatsapp     String?
+  published    Boolean                   @default(true)
+  sortOrder    Int                       @default(0)
+  updatedAt    DateTime                  @updatedAt
+  translations SiteSettingsTranslation[]
+}
+
+model SiteSettingsTranslation {
+  id             String            @id @default(cuid())
+  entityId       Int
+  locale         String
+  siteName       String?
+  tagline        String?
+  address        String?
+  openingHours   String?
+  footerText     String?
+  seoTitle       String?
+  seoDescription String?
+  status         TranslationStatus @default(DRAFT)
+  aiGenerated    Boolean           @default(false)
+  approved       Boolean           @default(false)
+  updatedAt      DateTime          @updatedAt
+  entity         SiteSettings      @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([entityId, locale])
+}
+
+// ---------- Pages ----------
+model Page {
+  id           String            @id @default(cuid())
+  key          String            @unique
+  image        String?
+  published    Boolean           @default(true)
+  sortOrder    Int               @default(0)
+  updatedAt    DateTime          @updatedAt
+  translations PageTranslation[]
+}
+
+model PageTranslation {
+  id             String            @id @default(cuid())
+  entityId       String
+  locale         String
+  title          String?
+  subtitle       String?
+  content        String?           @db.Text
+  image          String?
+  seoTitle       String?
+  seoDescription String?
+  status         TranslationStatus @default(DRAFT)
+  aiGenerated    Boolean           @default(false)
+  approved       Boolean           @default(false)
+  updatedAt      DateTime          @updatedAt
+  entity         Page              @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([entityId, locale])
+}
+
+// ---------- Plant catalogue ----------
+model ProductCategory {
+  id           String                       @id @default(cuid())
+  image        String?
+  published    Boolean                      @default(true)
+  sortOrder    Int                          @default(0)
+  updatedAt    DateTime                     @updatedAt
+  products     Product[]
+  translations ProductCategoryTranslation[]
+}
+
+model ProductCategoryTranslation {
+  id             String            @id @default(cuid())
+  entityId       String
+  locale         String
+  name           String?
+  slug           String?
+  description    String?           @db.Text
+  image          String?
+  seoTitle       String?
+  seoDescription String?
+  status         TranslationStatus @default(DRAFT)
+  aiGenerated    Boolean           @default(false)
+  approved       Boolean           @default(false)
+  updatedAt      DateTime          @updatedAt
+  entity         ProductCategory   @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([entityId, locale])
+  @@unique([locale, slug])
+}
+
+model Product {
+  id           String               @id @default(cuid())
+  categoryId   String?
+  category     ProductCategory?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  image        String?
+  lightLevel   LightLevel?
+  watering     WateringLevel?
+  placement    Placement?
+  height       String?
+  potSize      String?
+  price        String?
+  featured     Boolean              @default(false)
+  published    Boolean              @default(true)
+  sortOrder    Int                  @default(0)
+  updatedAt    DateTime             @updatedAt
+  translations ProductTranslation[]
+}
+
+model ProductTranslation {
+  id               String            @id @default(cuid())
+  entityId         String
+  locale           String
+  name             String?
+  slug             String?
+  shortDescription String?
+  description      String?           @db.Text
+  careTips         String?           @db.Text
+  origin           String?
+  image            String?
+  seoTitle         String?
+  seoDescription   String?
+  status           TranslationStatus @default(DRAFT)
+  aiGenerated      Boolean           @default(false)
+  approved         Boolean           @default(false)
+  updatedAt        DateTime          @updatedAt
+  entity           Product           @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([entityId, locale])
+  @@unique([locale, slug])
+}
+
+// ---------- Landscaping services ----------
+model Service {
+  id           String               @id @default(cuid())
+  icon         String?
+  image        String?
+  featured     Boolean              @default(true)
+  published    Boolean              @default(true)
+  sortOrder    Int                  @default(0)
+  updatedAt    DateTime             @updatedAt
+  translations ServiceTranslation[]
+}
+
+model ServiceTranslation {
+  id               String            @id @default(cuid())
+  entityId         String
+  locale           String
+  name             String?
+  slug             String?
+  shortDescription String?
+  description      String?           @db.Text
+  image            String?
+  seoTitle         String?
+  seoDescription   String?
+  status           TranslationStatus @default(DRAFT)
+  aiGenerated      Boolean           @default(false)
+  approved         Boolean           @default(false)
+  updatedAt        DateTime          @updatedAt
+  entity           Service           @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([entityId, locale])
+  @@unique([locale, slug])
+}
+
+// ---------- Projects ----------
+model ProjectCategory {
+  id           String                       @id @default(cuid())
+  published    Boolean                      @default(true)
+  sortOrder    Int                          @default(0)
+  updatedAt    DateTime                     @updatedAt
+  projects     Project[]
+  translations ProjectCategoryTranslation[]
+}
+
+model ProjectCategoryTranslation {
+  id          String            @id @default(cuid())
+  entityId    String
+  locale      String
+  name        String?
+  slug        String?
+  status      TranslationStatus @default(DRAFT)
+  aiGenerated Boolean           @default(false)
+  approved    Boolean           @default(false)
+  updatedAt   DateTime          @updatedAt
+  entity      ProjectCategory   @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([entityId, locale])
+}
+
+model Project {
+  id           String               @id @default(cuid())
+  categoryId   String?
+  category     ProjectCategory?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  clientId     String?
+  client       Client?              @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  image        String?
+  year         Int?
+  featured     Boolean              @default(false)
+  published    Boolean              @default(true)
+  sortOrder    Int                  @default(0)
+  updatedAt    DateTime             @updatedAt
+  gallery      GalleryItem[]
+  translations ProjectTranslation[]
+}
+
+model ProjectTranslation {
+  id             String            @id @default(cuid())
+  entityId       String
+  locale         String
+  title          String?
+  slug           String?
+  summary        String?
+  description    String?           @db.Text
+  location       String?
+  image          String?
+  seoTitle       String?
+  seoDescription String?
+  status         TranslationStatus @default(DRAFT)
+  aiGenerated    Boolean           @default(false)
+  approved       Boolean           @default(false)
+  updatedAt      DateTime          @updatedAt
+  entity         Project           @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([entityId, locale])
+  @@unique([locale, slug])
+}
+
+// ---------- Clients ----------
+model Client {
+  id           String              @id @default(cuid())
+  logo         String?
+  website      String?
+  published    Boolean             @default(true)
+  sortOrder    Int                 @default(0)
+  updatedAt    DateTime            @updatedAt
+  projects     Project[]
+  translations ClientTranslation[]
+}
+
+model ClientTranslation {
+  id          String            @id @default(cuid())
+  entityId    String
+  locale      String
+  name        String?
+  description String?           @db.Text
+  status      TranslationStatus @default(DRAFT)
+  aiGenerated Boolean           @default(false)
+  approved    Boolean           @default(false)
+  updatedAt   DateTime          @updatedAt
+  entity      Client            @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([entityId, locale])
+}
+
+// ---------- Gallery ----------
+model GalleryItem {
+  id           String                   @id @default(cuid())
+  image        String?
+  projectId    String?
+  project      Project?                 @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  published    Boolean                  @default(true)
+  sortOrder    Int                      @default(0)
+  updatedAt    DateTime                 @updatedAt
+  translations GalleryItemTranslation[]
+}
+
+model GalleryItemTranslation {
+  id          String            @id @default(cuid())
+  entityId    String
+  locale      String
+  title       String?
+  caption     String?
+  alt         String?
+  image       String?
+  status      TranslationStatus @default(DRAFT)
+  aiGenerated Boolean           @default(false)
+  approved    Boolean           @default(false)
+  updatedAt   DateTime          @updatedAt
+  entity      GalleryItem       @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([entityId, locale])
+}
+
+// ---------- Interface texts (overrides of the built-in dictionaries) ----------
+model UiTranslation {
+  id        String   @id @default(cuid())
+  key       String
+  locale    String
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+
+  @@unique([key, locale])
+}
+
+// ---------- Contact form ----------
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String   @db.Text
+  locale    String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

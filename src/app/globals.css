@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@custom-variant rtl (&:where([dir="rtl"], [dir="rtl"] *));
+
+@theme {
+  --color-forest-950: #0f2a1f;
+  --color-forest-900: #163a2b;
+  --color-forest-800: #1f4d3a;
+  --color-forest-700: #2a6249;
+  --color-leaf-600: #3f7d4e;
+  --color-leaf-500: #4f9460;
+  --color-leaf-100: #e3efe0;
+  --color-sage-300: #a8c3a0;
+  --color-cream-50: #fbf9f3;
+  --color-cream-100: #f5f1e6;
+  --color-sand-200: #e9e1cf;
+  --color-terracotta-500: #c4663f;
+  --color-terracotta-600: #a9532f;
+  --color-ink-900: #1c2620;
+  --color-ink-600: #4b5a51;
+  --color-ink-400: #7b887f;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-arabic: var(--font-cairo), "Segoe UI", Tahoma, sans-serif;
+
+  --radius-xl2: 1.25rem;
+  --shadow-soft: 0 10px 30px -12px rgb(22 58 43 / 0.25);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-cream-50);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Arabic: dedicated font for body and headings, slightly larger line-height. */
+html[lang="ar"] body,
+html[lang="ar"] .font-display,
+[dir="rtl"] .font-display {
+  font-family: var(--font-arabic);
+}
+html[lang="ar"] body {
+  line-height: 1.85;
+}
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3 {
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+/* Inputs typed in Arabic inside an LTR admin, and vice versa. */
+.field-rtl {
+  direction: rtl;
+  text-align: right;
+  font-family: var(--font-arabic);
+}
+.field-ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+@layer components {
+.container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+@media (min-width: 640px) {
+  .container-page {
+    padding-inline: 1.5rem;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.75rem 1.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  background: var(--color-forest-800);
+  color: white;
+}
+.btn-primary:hover {
+  background: var(--color-forest-900);
+}
+.btn-accent {
+  background: var(--color-terracotta-500);
+  color: white;
+}
+.btn-accent:hover {
+  background: var(--color-terracotta-600);
+}
+.btn-ghost {
+  background: rgb(255 255 255 / 0.12);
+  color: white;
+  border: 1px solid rgb(255 255 255 / 0.45);
+}
+.btn-ghost:hover {
+  background: rgb(255 255 255 / 0.22);
+}
+.btn-outline {
+  border: 1px solid var(--color-forest-800);
+  color: var(--color-forest-800);
+}
+.btn-outline:hover {
+  background: var(--color-forest-800);
+  color: white;
+}
+
+.prose-content p {
+  margin-bottom: 1rem;
+}
+.prose-content p:last-child {
+  margin-bottom: 0;
+}
+.prose-content ul {
+  list-style: disc;
+  padding-inline-start: 1.25rem;
+  margin-bottom: 1rem;
+}
+.prose-content li {
+  margin-bottom: 0.35rem;
+}
+.prose-content h3 {
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin: 1.5rem 0 0.5rem;
+  color: var(--color-forest-800);
+}
+
+.card {
+  background: white;
+  border-radius: var(--radius-xl2);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+}
+
+@layer components {
+/* Admin form controls */
+.input {
+  width: 100%;
+  border: 1px solid #d6dccf;
+  border-radius: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  background: white;
+  font-size: 0.92rem;
+}
+.input:focus {
+  outline: 2px solid var(--color-leaf-500);
+  outline-offset: 0;
+  border-color: transparent;
+}
+.label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ink-600);
+  margin-bottom: 0.3rem;
+}
+}
