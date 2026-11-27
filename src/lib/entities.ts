@@ -1,3 +1,4 @@
+import type { ImageSizeKey } from "./image-sizes";
 // Declarative description of every translatable content type.
 // The admin forms, the Translations Management module and the completion
 // indicators are all generated from this single configuration, so a new
@@ -14,6 +15,7 @@ export type FieldDef = {
   options?: { value: string; label: string }[]; // label = messages path
   relation?: EntityKey;
   slugFrom?: string;
+  size?: ImageSizeKey; // image fields: recommended dimensions shown in the admin
 };
 
 export type EntityKey =
@@ -59,12 +61,12 @@ export const entities: Record<EntityKey, EntityConfig> = {
     trModel: "pageTranslation",
     idType: "string",
     titleField: "title",
-    baseFields: [{ key: "image", type: "image", label: "admin.image" }, ...common],
+    baseFields: [{ key: "image", type: "image", label: "admin.image", size: "page" }, ...common],
     trFields: [
       { key: "title", type: "text", label: "admin.fields.title" },
       { key: "subtitle", type: "textarea", label: "admin.fields.subtitle" },
       { key: "content", type: "longtext", label: "admin.fields.content" },
-      { key: "image", type: "image", label: "admin.imageOverride" },
+      { key: "image", type: "image", label: "admin.imageOverride", size: "page" },
       ...seoFields,
     ],
     required: ["title", "subtitle", "seoTitle", "seoDescription"],
@@ -77,12 +79,12 @@ export const entities: Record<EntityKey, EntityConfig> = {
     trModel: "productCategoryTranslation",
     idType: "string",
     titleField: "name",
-    baseFields: [{ key: "image", type: "image", label: "admin.image" }, ...common],
+    baseFields: [{ key: "image", type: "image", label: "admin.image", size: "category" }, ...common],
     trFields: [
       { key: "name", type: "text", label: "admin.fields.name" },
       { key: "slug", type: "slug", label: "admin.slug", slugFrom: "name" },
       { key: "description", type: "textarea", label: "admin.fields.description" },
-      { key: "image", type: "image", label: "admin.imageOverride" },
+      { key: "image", type: "image", label: "admin.imageOverride", size: "category" },
       ...seoFields,
     ],
     required: ["name", "slug", "description"],
@@ -97,7 +99,7 @@ export const entities: Record<EntityKey, EntityConfig> = {
     idType: "string",
     titleField: "name",
     baseFields: [
-      { key: "image", type: "image", label: "admin.image" },
+      { key: "image", type: "image", label: "admin.image", size: "product" },
       { key: "categoryId", type: "relation", label: "admin.fields.category", relation: "categories" },
       {
         key: "lightLevel",
@@ -142,7 +144,7 @@ export const entities: Record<EntityKey, EntityConfig> = {
       { key: "description", type: "longtext", label: "admin.fields.description" },
       { key: "careTips", type: "longtext", label: "admin.fields.careTips" },
       { key: "origin", type: "text", label: "admin.fields.origin" },
-      { key: "image", type: "image", label: "admin.imageOverride" },
+      { key: "image", type: "image", label: "admin.imageOverride", size: "product" },
       ...seoFields,
     ],
     required: ["name", "slug", "shortDescription", "description"],
@@ -157,7 +159,7 @@ export const entities: Record<EntityKey, EntityConfig> = {
     idType: "string",
     titleField: "name",
     baseFields: [
-      { key: "image", type: "image", label: "admin.image" },
+      { key: "image", type: "image", label: "admin.image", size: "service" },
       {
         key: "icon",
         type: "select",
@@ -172,7 +174,7 @@ export const entities: Record<EntityKey, EntityConfig> = {
       { key: "slug", type: "slug", label: "admin.slug", slugFrom: "name" },
       { key: "shortDescription", type: "textarea", label: "admin.fields.shortDescription" },
       { key: "description", type: "longtext", label: "admin.fields.description" },
-      { key: "image", type: "image", label: "admin.imageOverride" },
+      { key: "image", type: "image", label: "admin.imageOverride", size: "service" },
       ...seoFields,
     ],
     required: ["name", "slug", "shortDescription", "description"],
@@ -202,7 +204,7 @@ export const entities: Record<EntityKey, EntityConfig> = {
     idType: "string",
     titleField: "title",
     baseFields: [
-      { key: "image", type: "image", label: "admin.image" },
+      { key: "image", type: "image", label: "admin.image", size: "project" },
       { key: "categoryId", type: "relation", label: "admin.fields.category", relation: "projectCategories" },
       { key: "clientId", type: "relation", label: "admin.fields.client", relation: "clients" },
       { key: "year", type: "number", label: "admin.fields.year" },
@@ -215,7 +217,7 @@ export const entities: Record<EntityKey, EntityConfig> = {
       { key: "summary", type: "textarea", label: "admin.fields.summary" },
       { key: "description", type: "longtext", label: "admin.fields.description" },
       { key: "location", type: "text", label: "admin.fields.location" },
-      { key: "image", type: "image", label: "admin.imageOverride" },
+      { key: "image", type: "image", label: "admin.imageOverride", size: "project" },
       ...seoFields,
     ],
     required: ["title", "slug", "summary", "description"],
@@ -230,7 +232,7 @@ export const entities: Record<EntityKey, EntityConfig> = {
     idType: "string",
     titleField: "name",
     baseFields: [
-      { key: "logo", type: "image", label: "admin.fields.logo" },
+      { key: "logo", type: "image", label: "admin.fields.logo", size: "clientLogo" },
       { key: "website", type: "text", label: "admin.fields.website" },
       ...common,
     ],
@@ -249,7 +251,7 @@ export const entities: Record<EntityKey, EntityConfig> = {
     idType: "string",
     titleField: "title",
     baseFields: [
-      { key: "image", type: "image", label: "admin.image" },
+      { key: "image", type: "image", label: "admin.image", size: "gallery" },
       { key: "projectId", type: "relation", label: "admin.fields.project", relation: "projects" },
       ...common,
     ],
@@ -257,7 +259,7 @@ export const entities: Record<EntityKey, EntityConfig> = {
       { key: "title", type: "text", label: "admin.fields.title" },
       { key: "caption", type: "textarea", label: "admin.fields.caption" },
       { key: "alt", type: "text", label: "admin.fields.alt" },
-      { key: "image", type: "image", label: "admin.imageOverride" },
+      { key: "image", type: "image", label: "admin.imageOverride", size: "gallery" },
     ],
     required: ["title", "caption"],
     seo: false,
@@ -271,8 +273,8 @@ export const entities: Record<EntityKey, EntityConfig> = {
     titleField: "siteName",
     singleton: true,
     baseFields: [
-      { key: "logoUrl", type: "image", label: "admin.fields.logo" },
-      { key: "faviconUrl", type: "image", label: "admin.fields.favicon" },
+      { key: "logoUrl", type: "image", label: "admin.fields.logo", size: "logo" },
+      { key: "faviconUrl", type: "image", label: "admin.fields.favicon", size: "favicon" },
       { key: "phones", type: "lines", label: "admin.fields.phones" },
       { key: "email", type: "text", label: "admin.fields.contactEmail" },
       { key: "mapLink", type: "text", label: "admin.fields.mapLink" },

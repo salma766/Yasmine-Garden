@@ -7,7 +7,8 @@ import { entities, translationState, type EntityKey, type FieldDef, type TrState
 import { locales, localeInfo, slugify, type Locale } from "@/lib/i18n";
 import { tp } from "@/lib/tp";
 import type { Messages } from "@/messages/fr";
-import { ImageField } from "./ImageField";
+import { ImageField, type ImageSizeInfo } from "./ImageField";
+import { imageSizes } from "@/lib/image-sizes";
 import { StateChip } from "./StateChip";
 
 type Values = Record<string, unknown>;
@@ -29,6 +30,12 @@ export type EditorProps = {
 
 function imageLabels(t: Messages) {
   return { upload: t.admin.upload, uploading: t.admin.uploading, remove: t.admin.removeImage, url: t.admin.imageUrl, error: t.admin.saveError };
+}
+
+function sizeInfo(field: FieldDef, t: Messages): ImageSizeInfo | undefined {
+  if (!field.size) return undefined;
+  const { tips, ...labels } = t.admin.imageSize;
+  return { ...imageSizes[field.size], tip: tips[field.size], labels };
 }
 
 function Field({
@@ -66,7 +73,7 @@ function Field({
     return (
       <div>
         <span className="label">{label}</span>
-        <ImageField name={field.key} defaultValue={str} labels={imageLabels(t)} />
+        <ImageField name={field.key} defaultValue={str} labels={imageLabels(t)} size={sizeInfo(field, t)} />
       </div>
     );
   }

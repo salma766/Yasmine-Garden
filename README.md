@@ -36,6 +36,20 @@ Site multilingue (français, anglais, italien, arabe avec mise en page RTL compl
 - **Utilisateurs** : nombre illimité de comptes, avec deux rôles. **Éditeur** : tout le contenu, les traductions, les paramètres et les messages. **Administrateur** : tout cela, plus la gestion des utilisateurs. Il reste toujours au moins un administrateur.
 - **Mon compte** : chacun peut changer son nom et son mot de passe.
 
+## Tailles d'images conseillées
+
+L'admin affiche la taille conseillée à côté de chaque champ image et vérifie la photo envoyée (trop petite, ou proportions différentes qui entraîneront un recadrage).
+
+| Contenu | Taille (px) | Format |
+|---|---|---|
+| Pages (bandeau d'accueil, à propos…) | 1920 × 1080 | 16:9, sujet au centre |
+| Catégories de plantes, plantes | 1200 × 1200 | carré, sujet au centre |
+| Services, réalisations, catégories de projets | 1600 × 900 | 16:9 |
+| Galerie | 1600 × 1200 | 4:3 (portrait accepté) |
+| Logos des clients | 400 × 200 | PNG transparent |
+| Logo du site | 600 × 200 | PNG ou SVG transparent |
+| Favicon | 512 × 512 | PNG carré |
+
 ## Mise en ligne sur Vercel
 
 1. Sur [vercel.com](https://vercel.com), **Add New → Project** et importez le dépôt GitHub `salma766/Yasmine-Garden`.
