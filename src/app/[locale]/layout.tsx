@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { Cairo, Inter, Playfair_Display } from "next/font/google";
 import "../globals.css";
-import { dirOf, isLocale, locales, type Locale } from "@/lib/i18n";
+import { dirOf, isLocale, type Locale } from "@/lib/i18n";
 import { getMessages } from "@/lib/messages";
 import { getSettings } from "@/lib/content";
 import { Header } from "@/components/site/Header";
@@ -14,10 +14,6 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfa
 const cairo = Cairo({ subsets: ["arabic", "latin"], variable: "--font-cairo", display: "swap" });
 
 export const dynamic = "force-dynamic";
-
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
 
 export default async function LocaleLayout({ children, params }: { children: ReactNode; params: Promise<{ locale: string }> }) {
   const { locale: raw } = await params;

@@ -76,7 +76,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
             <h1 className="mt-2 font-display text-4xl font-bold text-forest-900 md:text-5xl">{tr.name}</h1>
             {tr.origin && (
               <p className="mt-2 text-ink-400">
-                {t.plants.origin} : {tr.origin}
+                {t.plants.origin} · {tr.origin}
               </p>
             )}
             <p className="mt-5 text-lg text-ink-600">{tr.shortDescription}</p>

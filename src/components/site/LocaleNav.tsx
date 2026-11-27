@@ -130,10 +130,10 @@ export function LanguageSwitcher({ locale, label, unavailable }: { locale: Local
 
 type NavItem = { href: string; label: string };
 
-export function DesktopNav({ items }: { items: NavItem[] }) {
+export function DesktopNav({ items, label }: { items: NavItem[]; label: string }) {
   const pathname = decodeURIComponent(usePathname());
   return (
-    <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Main">
+    <nav className="hidden items-center gap-0.5 xl:flex" aria-label={label}>
       {items.map((it) => {
         const target = decodeURIComponent(it.href);
         const active = target.split("/").length <= 2 ? pathname === target : pathname.startsWith(target);
@@ -195,7 +195,7 @@ export function MobileNav({
                 <CloseIcon width={24} height={24} />
               </button>
             </div>
-            <nav className="flex flex-col gap-1" aria-label="Mobile">
+            <nav className="flex flex-col gap-1" aria-label={openLabel}>
               {items.map((it) => (
                 <Link key={it.href} href={it.href} className="rounded-xl px-4 py-3 text-lg font-medium text-ink-900 hover:bg-leaf-100">
                   {it.label}

@@ -65,7 +65,7 @@ export function Header({
       <div className="border-b border-sand-200/80 bg-cream-50/90 backdrop-blur">
         <div className="container-page flex h-[72px] items-center justify-between gap-3">
           <Logo href={href(locale, "home")} logoUrl={logoUrl} name={siteName} alt={t.a11y.logoAlt} />
-          <DesktopNav items={items} />
+          <DesktopNav items={items} label={t.nav.home} />
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
             <LanguageSwitcher locale={locale} label={t.a11y.language} unavailable={t.a11y.unavailable} />
             <Link href={quote.href} className="btn btn-accent hidden whitespace-nowrap !py-2.5 2xl:inline-flex">
