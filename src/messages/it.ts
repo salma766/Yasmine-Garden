@@ -292,6 +292,9 @@ const it: Messages = {
       language: "Lingua",
     },
     logoHint: "Il logo appare nell'intestazione e nel piè di pagina. Formato consigliato: PNG o SVG con sfondo trasparente.",
+    slugTaken: "Questo slug è già usato in questa lingua. Scegline un altro.",
+    saveError: "Si è verificato un errore durante il salvataggio.",
+    noPreview: "Anteprima non disponibile: salva prima uno slug.",
     requiredHint: "Campi necessari per una traduzione completa",
   },
 };

@@ -292,6 +292,9 @@ const en: Messages = {
       language: "Language",
     },
     logoHint: "The logo appears in the header and footer. Recommended format: PNG or SVG with a transparent background.",
+    slugTaken: "This slug is already used in this language. Please choose another one.",
+    saveError: "An error occurred while saving.",
+    noPreview: "Preview unavailable: save a slug first.",
     requiredHint: "Fields required for a complete translation",
   },
 };

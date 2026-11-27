@@ -292,6 +292,9 @@ const fr = {
       language: "Langue",
     },
     logoHint: "Le logo apparaît dans l'en-tête et le pied de page. Format conseillé : PNG ou SVG à fond transparent.",
+    slugTaken: "Ce slug est déjà utilisé dans cette langue. Choisissez-en un autre.",
+    saveError: "Une erreur est survenue lors de l'enregistrement.",
+    noPreview: "Aperçu indisponible : enregistrez d'abord un slug.",
     requiredHint: "Champs requis pour une traduction complète",
   },
 };
