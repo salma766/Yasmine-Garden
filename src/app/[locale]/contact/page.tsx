@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { staticAlternates, type Locale } from "@/lib/i18n";
 import { getMessages } from "@/lib/messages";
 import { getPage, getSettings, isPreview } from "@/lib/content";
+import { BusinessJsonLd } from "@/components/site/BusinessJsonLd";
 import { buildMetadata } from "@/lib/seo";
 import { PageAlternates } from "@/components/site/LocaleNav";
 import { PageHero } from "@/components/site/ui";
@@ -33,6 +34,7 @@ export default async function Contact({ params, searchParams }: Props) {
   return (
     <>
       <PageAlternates value={staticAlternates("contact")} />
+      <BusinessJsonLd locale={locale} settings={settings} />
       <PageHero title={data?.tr?.title || c.title} subtitle={data?.tr?.subtitle || c.intro} />
       <section className="container-page grid gap-10 py-16 lg:grid-cols-5">
         <div className="space-y-4 lg:col-span-2">

@@ -3,9 +3,9 @@ import type { Messages } from "./fr";
 const en: Messages = {
   meta: {
     siteName: "Yasmine Gardens Nursery",
-    defaultTitle: "Yasmine Gardens Nursery | Plants and landscaping in Nabeul, Tunisia",
+    defaultTitle: "Yasmine Gardens Nursery Tunisia | Plants & landscaping in Nabeul",
     defaultDescription:
-      "Plant nursery and landscaping company in Bouargoub (Nabeul): indoor and outdoor plants, ornamental plants, garden design and green space maintenance.",
+      "Yasmine Gardens (Yasmine Garden), a plant nursery in Tunisia, in Bouargoub, Nabeul: indoor and outdoor plants, ornamental plants, landscaping. Open daily, 9 am to 5 pm.",
   },
   a11y: {
     skip: "Skip to content",
@@ -41,7 +41,7 @@ const en: Messages = {
     next: "Next",
   },
   home: {
-    heroEyebrow: "Plant nursery & landscaper in Nabeul",
+    heroEyebrow: "Plant nursery & landscaper in Nabeul, Tunisia",
     ctaPlants: "Discover our plants",
     ctaQuote: "Request a quote",
     whyTitle: "Why choose Yasmine Gardens",

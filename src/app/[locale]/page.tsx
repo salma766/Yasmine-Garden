@@ -5,6 +5,7 @@ import { getMessages } from "@/lib/messages";
 import { getPage, getSettings, imageFor, isPreview, listCategories, listClients, listGallery, listProducts, listProjects, listServices } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 import { PageAlternates } from "@/components/site/LocaleNav";
+import { BusinessJsonLd } from "@/components/site/BusinessJsonLd";
 import { Card, Img, RichText, SectionHeading } from "@/components/site/ui";
 import { ArrowForward, ClockIcon, KeyIcon, LeafIcon, PhoneIcon, PinIcon, ServiceIcon, StarIcon, UsersIcon } from "@/components/Icons";
 
@@ -50,6 +51,7 @@ export default async function Home({ params, searchParams }: Props) {
   return (
     <>
       <PageAlternates value={staticAlternates("home")} />
+      <BusinessJsonLd locale={locale} settings={settings} />
       {preview && <div className="bg-terracotta-500 py-2 text-center text-sm text-white">{t.common.previewBanner}</div>}
 
       {/* Hero */}

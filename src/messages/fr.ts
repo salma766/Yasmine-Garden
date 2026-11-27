@@ -3,9 +3,9 @@
 const fr = {
   meta: {
     siteName: "Pépinière Yasmine Gardens",
-    defaultTitle: "Pépinière Yasmine Gardens | Plantes et aménagement paysager à Nabeul",
+    defaultTitle: "Pépinière Yasmine Gardens Tunisie | Plantes et paysagiste à Nabeul",
     defaultDescription:
-      "Pépinière et société d'aménagement paysager à Bouargoub (Nabeul) : plantes d'intérieur et d'extérieur, plantes ornementales, création et entretien d'espaces verts.",
+      "Pépinière Yasmine Gardens (Yasmine Garden), pépinière en Tunisie à Bouargoub, Nabeul : plantes d'intérieur et d'extérieur, plantes ornementales, aménagement paysager. Ouvert 7j/7 de 9h à 17h.",
   },
   a11y: {
     skip: "Aller au contenu",
@@ -41,7 +41,7 @@ const fr = {
     next: "Suivant",
   },
   home: {
-    heroEyebrow: "Pépinière & paysagiste à Nabeul",
+    heroEyebrow: "Pépinière & paysagiste à Nabeul, Tunisie",
     ctaPlants: "Découvrir nos plantes",
     ctaQuote: "Demander un devis",
     whyTitle: "Pourquoi choisir Yasmine Gardens",

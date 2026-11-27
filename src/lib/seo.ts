@@ -48,6 +48,7 @@ export async function buildMetadata(opts: {
     },
     twitter: { card: image ? "summary_large_image" : "summary", title, description },
     robots: opts.noindex ? { index: false, follow: false } : undefined,
+    verification: process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : undefined,
     icons: settings.base?.faviconUrl ? { icon: settings.base.faviconUrl } : undefined,
   };
 }

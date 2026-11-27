@@ -28,9 +28,9 @@ const settingsTr: Tr = {
     openingHours: "Tous les jours, du lundi au dimanche, de 9h00 à 17h00",
     footerText:
       "Pépinière et société d'aménagement paysager à Bouargoub / Belli (Nabeul), spécialisée dans la production et la vente de plantes d'intérieur et d'extérieur, de plantes ornementales et dans l'aménagement d'espaces verts.",
-    seoTitle: "Pépinière Yasmine Gardens | Plantes et aménagement paysager à Nabeul",
+    seoTitle: "Pépinière Yasmine Gardens Tunisie | Plantes et paysagiste à Nabeul",
     seoDescription:
-      "Pépinière à Bouargoub (Nabeul) : plantes d'intérieur et d'extérieur, plantes ornementales, création et entretien de jardins et d'espaces verts. Ouvert 7j/7 de 9h à 17h.",
+      "Pépinière Yasmine Gardens (Yasmine Garden), pépinière en Tunisie à Bouargoub, Nabeul : plantes d'intérieur et d'extérieur, plantes ornementales, aménagement paysager. Ouvert 7j/7 de 9h à 17h.",
   },
   en: {
     siteName: "Yasmine Gardens Nursery",
@@ -39,9 +39,9 @@ const settingsTr: Tr = {
     openingHours: "Every day, Monday to Sunday, 9:00 am to 5:00 pm",
     footerText:
       "Plant nursery and landscaping company in Bouargoub / Belli (Nabeul), specialising in growing and selling indoor and outdoor plants and ornamental plants, and in creating green spaces.",
-    seoTitle: "Yasmine Gardens Nursery | Plants and landscaping in Nabeul, Tunisia",
+    seoTitle: "Yasmine Gardens Nursery Tunisia | Plants & landscaping in Nabeul",
     seoDescription:
-      "Plant nursery in Bouargoub (Nabeul, Tunisia): indoor and outdoor plants, ornamental plants, garden design and green space maintenance. Open daily, 9 am to 5 pm.",
+      "Yasmine Gardens (Yasmine Garden), a plant nursery in Tunisia, in Bouargoub, Nabeul: indoor and outdoor plants, ornamental plants, landscaping. Open daily, 9 am to 5 pm.",
   },
   it: {
     siteName: "Vivaio Yasmine Gardens",
@@ -50,9 +50,9 @@ const settingsTr: Tr = {
     openingHours: "Tutti i giorni, dal lunedì alla domenica, dalle 9:00 alle 17:00",
     footerText:
       "Vivaio e impresa di progettazione del verde a Bouargoub / Belli (Nabeul), specializzata nella produzione e vendita di piante da interno e da esterno, piante ornamentali e nella realizzazione di spazi verdi.",
-    seoTitle: "Vivaio Yasmine Gardens | Piante e giardini a Nabeul, Tunisia",
+    seoTitle: "Vivaio Yasmine Gardens Tunisia | Piante e giardini a Nabeul",
     seoDescription:
-      "Vivaio a Bouargoub (Nabeul, Tunisia): piante da interno e da esterno, piante ornamentali, progettazione e manutenzione di giardini. Aperto tutti i giorni dalle 9 alle 17.",
+      "Vivaio Yasmine Gardens (Yasmine Garden), vivaio in Tunisia a Bouargoub, Nabeul: piante da interno e da esterno, piante ornamentali, progettazione del verde. Aperto tutti i giorni dalle 9 alle 17.",
   },
   ar: {
     siteName: "مشتل ياسمين غاردنز",
@@ -61,9 +61,9 @@ const settingsTr: Tr = {
     openingHours: "يوميًا من الاثنين إلى الأحد، من الساعة 9:00 صباحًا إلى 5:00 مساءً",
     footerText:
       "مشتل وشركة لتنسيق الحدائق في بوعرقوب / بلّي (ولاية نابل)، مختص في إنتاج وبيع النباتات الداخلية والخارجية ونباتات الزينة، وفي تهيئة المساحات الخضراء.",
-    seoTitle: "مشتل ياسمين غاردنز | نباتات وتنسيق حدائق في نابل",
+    seoTitle: "مشتل ياسمين غاردنز تونس | نباتات وتنسيق حدائق في نابل",
     seoDescription:
-      "مشتل في بوعرقوب (نابل): نباتات داخلية وخارجية، نباتات زينة، تصميم وصيانة الحدائق والمساحات الخضراء. مفتوح يوميًا من 9 صباحًا إلى 5 مساءً.",
+      "مشتل ياسمين غاردنز (Yasmine Gardens)، مشتل في تونس ببوعرقوب، نابل: نباتات داخلية وخارجية، نباتات زينة وتنسيق حدائق. مفتوح يوميًا من 9 صباحًا إلى 5 مساءً.",
   },
 };
 
@@ -484,8 +484,42 @@ async function ensureAdmin() {
   console.log(`Administrator ready: ${email}`);
 }
 
+// Earlier default SEO texts for the site settings. Rows still holding them were
+// never edited by the admin, so they are upgraded to the current defaults.
+const previousSettingsSeo: Record<L, { seoTitle: string; seoDescription: string }> = {
+  "fr": {
+    "seoTitle": "Pépinière Yasmine Gardens | Plantes et aménagement paysager à Nabeul",
+    "seoDescription": "Pépinière à Bouargoub (Nabeul) : plantes d'intérieur et d'extérieur, plantes ornementales, création et entretien de jardins et d'espaces verts. Ouvert 7j/7 de 9h à 17h."
+  },
+  "en": {
+    "seoTitle": "Yasmine Gardens Nursery | Plants and landscaping in Nabeul, Tunisia",
+    "seoDescription": "Plant nursery in Bouargoub (Nabeul, Tunisia): indoor and outdoor plants, ornamental plants, garden design and green space maintenance. Open daily, 9 am to 5 pm."
+  },
+  "it": {
+    "seoTitle": "Vivaio Yasmine Gardens | Piante e giardini a Nabeul, Tunisia",
+    "seoDescription": "Vivaio a Bouargoub (Nabeul, Tunisia): piante da interno e da esterno, piante ornamentali, progettazione e manutenzione di giardini. Aperto tutti i giorni dalle 9 alle 17."
+  },
+  "ar": {
+    "seoTitle": "مشتل ياسمين غاردنز | نباتات وتنسيق حدائق في نابل",
+    "seoDescription": "مشتل في بوعرقوب (نابل): نباتات داخلية وخارجية، نباتات زينة، تصميم وصيانة الحدائق والمساحات الخضراء. مفتوح يوميًا من 9 صباحًا إلى 5 مساءً."
+  }
+};
+
+async function upgradeDefaultSeo() {
+  for (const l of ["fr", "en", "it", "ar"] as L[]) {
+    const old = previousSettingsSeo[l];
+    const current = (settingsTr as Record<L, { seoTitle?: string; seoDescription?: string }>)[l];
+    const { count } = await prisma.siteSettingsTranslation.updateMany({
+      where: { locale: l, seoTitle: old.seoTitle, seoDescription: old.seoDescription },
+      data: { seoTitle: current.seoTitle, seoDescription: current.seoDescription },
+    });
+    if (count) console.log(`Upgraded default SEO texts (${l}).`);
+  }
+}
+
 async function main() {
   await ensureAdmin();
+  await upgradeDefaultSeo();
 
   const force = process.env.SEED_FORCE === "1";
   const existing = await prisma.page.count();

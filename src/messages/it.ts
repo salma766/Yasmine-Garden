@@ -3,9 +3,9 @@ import type { Messages } from "./fr";
 const it: Messages = {
   meta: {
     siteName: "Vivaio Yasmine Gardens",
-    defaultTitle: "Vivaio Yasmine Gardens | Piante e progettazione del verde a Nabeul",
+    defaultTitle: "Vivaio Yasmine Gardens Tunisia | Piante e giardini a Nabeul",
     defaultDescription:
-      "Vivaio e impresa di progettazione del verde a Bouargoub (Nabeul): piante da interno e da esterno, piante ornamentali, realizzazione e manutenzione di giardini.",
+      "Vivaio Yasmine Gardens (Yasmine Garden), vivaio in Tunisia a Bouargoub, Nabeul: piante da interno e da esterno, piante ornamentali, progettazione del verde. Aperto tutti i giorni dalle 9 alle 17.",
   },
   a11y: {
     skip: "Vai al contenuto",
@@ -41,7 +41,7 @@ const it: Messages = {
     next: "Successivo",
   },
   home: {
-    heroEyebrow: "Vivaio e paesaggista a Nabeul",
+    heroEyebrow: "Vivaio e paesaggista a Nabeul, Tunisia",
     ctaPlants: "Scopri le nostre piante",
     ctaQuote: "Richiedi un preventivo",
     whyTitle: "Perché scegliere Yasmine Gardens",
